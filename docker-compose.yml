@@ -1,4 +1,4 @@
-version: "3.3"
+version: "3.9"
 
 services:
   nginx:
@@ -13,7 +13,7 @@ services:
       - backend
     networks:
       - fullstack-net
-    restart: "always"
+    restart: always
 
   frontend:
     image: mangesh1508/frontend:latest
@@ -22,19 +22,19 @@ services:
       - backend
     networks:
       - fullstack-net
-    restart: "always"
+    restart: always
 
-backend:
-  image: mangesh1508/backend:latest
-  container_name: backend
-  environment:
-    - MONGO_URL=mongodb://mongo:27017/your_db
-  depends_on:
-    - mongo
-  networks:
-    - fullstack-net
-  restart: always
-  
+  backend:
+    image: mangesh1508/backend:latest
+    container_name: backend
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/your_db
+    depends_on:
+      - mongo
+    networks:
+      - fullstack-net
+    restart: always
+
   mongo:
     image: mongo:6
     container_name: mongo
@@ -44,7 +44,7 @@ backend:
       - mongo_data:/data/db
     networks:
       - fullstack-net
-    restart: "always"
+    restart: always
 
 volumes:
   mongo_data:
