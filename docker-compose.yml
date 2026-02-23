@@ -24,13 +24,17 @@ services:
       - fullstack-net
     restart: "always"
 
-  backend:
-    image: mangesh1508/backend:latest
-    container_name: backend
-    networks:
-      - fullstack-net
-    restart: "always"
-
+backend:
+  image: mangesh1508/backend:latest
+  container_name: backend
+  environment:
+    - MONGO_URL=mongodb://mongo:27017/your_db
+  depends_on:
+    - mongo
+  networks:
+    - fullstack-net
+  restart: always
+  
   mongo:
     image: mongo:6
     container_name: mongo
