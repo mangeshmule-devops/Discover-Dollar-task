@@ -1,4 +1,4 @@
-name: CI/CD Docker Compose Deployment
+name: CI/CD Discover-Doller-Task
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: CI – Validate Docker Compose
+    name: CI – Validate Configs
     runs-on: ubuntu-latest
 
     steps:
@@ -16,7 +16,8 @@ jobs:
 
       - name: Validate docker-compose.yml
         run: |
-          docker compose -f docker-compose.yml config
+          docker compose -f dockercompose.yml config
+
 
   deploy:
     name: CD – Deploy to EC2
@@ -24,26 +25,34 @@ jobs:
     needs: build
 
     steps:
-      - name: Manual SSH test and deploy
-        run: |
-          echo "${{ secrets.SERVER_SSH_KEY }}" > key.pem
-          chmod 600 key.pem
-
-          ssh -o StrictHostKeyChecking=no -i key.pem \
-            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
-
+      - name: Deploy on EC2 using Docker Compose
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ubuntu
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          port: 22
+          timeout: 30s
+          command_timeout: 10m
+          script: |
             set -e
 
+            echo "Connected user:"
+            whoami
+
             echo "Going to project directory"
-            cd /home/ubuntu/Discover-Dollar-task
+            cd /home/ubuntu/Devops-first-project
 
-            echo "Pull latest code"
-            git pull origin main
+            echo "Files in directory:"
+            ls -la
 
-            echo "Rebuilding containers"
-            docker compose down
-            docker compose up -d --build
+            echo "Docker versions:"
+            docker --version
+            docker-compose version
+
+            echo "Deploying application"
+            docker-compose -f dockercompose.yml pull
+            docker-compose -f dockercompose.yml down
+            docker-compose -f dockercompose.yml up -d
 
             echo "Deployment completed successfully"
-
-          EOF
