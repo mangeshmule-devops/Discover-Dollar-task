@@ -41,7 +41,7 @@ jobs:
             whoami
 
             echo "Going to project directory"
-            cd /home/ubuntu/Devops-first-project
+            cd /home/ubuntu/Discover-Dollar-task
 
             echo "Files in directory:"
             ls -la
