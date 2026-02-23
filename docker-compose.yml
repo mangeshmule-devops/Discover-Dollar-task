@@ -16,7 +16,7 @@ services:
     restart: always
 
   frontend:
-    image: mangesh1508/frontend:latest
+    image: mangesh1508/frontend:v2
     container_name: frontend
     depends_on:
       - backend
@@ -25,7 +25,7 @@ services:
     restart: always
 
   backend:
-    image: mangesh1508/backend:latest
+    image: mangesh1508/backend:v2
     container_name: backend
     environment:
       - MONGO_URL=mongodb://mongo:27017/your_db
