@@ -16,7 +16,7 @@ jobs:
 
       - name: Validate docker-compose.yml
         run: |
-          docker compose -f dockercompose.yml config
+          docker compose -f docker-compose.yml config
 
 
   deploy:
