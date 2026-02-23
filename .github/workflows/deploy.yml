@@ -42,7 +42,7 @@ jobs:
 
             echo "Going to project directory"
             cd /home/ubuntu/Discover-Dollar-task
-            sudo git clone https://github.com/mangeshmule-devops/Discover-Dollar-task.git
+            sudo git pull
 
             echo "Files in directory:"
             ls -la
