@@ -25,7 +25,7 @@ services:
     restart: always
 
   backend:
-    image: mangesh1508/backend:v2
+    image: mangesh1508/backend:v3
     container_name: backend
     environment:
       - MONGO_URL=mongodb://mongo:27017/your_db
