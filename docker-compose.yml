@@ -16,7 +16,7 @@ services:
     restart: always
 
   frontend:
-    image: mangesh1508/frontend:v2
+    image: mangesh1508/frontend:v3
     container_name: frontend
     depends_on:
       - backend
